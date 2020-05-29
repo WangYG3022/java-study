@@ -1,0 +1,23 @@
+{
+  "code": 1,
+  "msg": "",
+  "result": {
+    "totalElements": 10,
+    "content": [
+      {
+        "name": "名称1",
+        "sex": "男",
+        "age": "1"
+      },
+      {
+        "name": "名称2",
+        "sex": "男",
+        "age": "2"
+      },{
+        "name": "名称3",
+        "sex": "男",
+        "age": "3"
+      }
+    ]
+  }
+}
