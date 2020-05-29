@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 指定数据连接驱动jar地址 -->
+    <classPathEntry location="D:\mysql-connector-java-8.0.18.jar"/>
+    <!-- 一个数据库一个context -->
+    <context id="mybatis" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <!-- MySQL的分隔符 -->
+        <property name="beginningDelimiter" value="'"/>
+        <property name="endingDelimiter" value="'"/>
+        <!-- 配置pojo的序列化 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <!-- 配置pojo自动生成toString()方法-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳 -->
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=UTF-8&amp;useTimezone=true&amp;serverTimezone=Asia/Shanghai"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!--
+                false(默认)：scale>0;length>18：解析为BigDecimal;
+                            scale=0;length[10,18]：解析为Long；
+                            scale=0;length[5,9]：解析为Integer；
+                            scale=0;length<5：解析为Short；
+                true：把JDBC DECIMAL和NUMERIC类型解析为java.math.BigDecimal
+             -->
+            <property name="forceBigDecimals" value="false"/>
+            <!--
+            	This property is used to specify whether MyBatis Generator should force the use of
+            	JSR-310 data types for DATE, TIME, and TIMESTAMP fields, rather than using java.util.Date
+             -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!-- 生成model模型，对应的包路径，以及文件存放路径(targetProject)，targetProject可以指定具体的路径,如./src/main/java，
+            也可以使用“MAVEN”来自动生成，这样生成的代码会在target/generatord-source目录下 -->
+        <javaModelGenerator targetPackage="com.wang.mybatis.pojo" targetProject="./src/main/java">
+            <!-- 是否在当前路径下新加一层schema,eg：false路径com.hmct.model， true:com.hmct.model.[schemaName] -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成Mapperxml文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 对应的Mapper接口类文件 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.wang.mybatis.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 列出要生成代码的所有表(更改tableName和domainObjectName就可以) -->
+        <table tableName="user" domainObjectName="User" schema="">
+			<!-- 为true，生成的实体类会直接使用column的名字，为false，生成的实体类使用驼峰命名 -->
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="user_id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
